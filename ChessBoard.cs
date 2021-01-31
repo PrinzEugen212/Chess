@@ -26,8 +26,8 @@ namespace Chess
                     }
                     Console.Write(" ");
                     Position[c2].Write();
-                    Console.Write(" ");
                     c2++;
+                    Console.Write(" ");
                     if (j == 7)
                     {
                         Console.ResetColor();
@@ -53,11 +53,12 @@ namespace Chess
                 Position[i] = new Cell(Coordinate);
                 if (HNum == 1 || HNum == 2) 
                 {
-                    Position[i].ChangeContent(new ChessPiece(Contents[i-32], true));
+                    Position[i].ChangeContent(new ChessPiece(Coordinate, Contents[i-32], true));
+
                 }
                 if (HNum == 7 || HNum == 8)
                 {
-                    Position[i].ChangeContent(new ChessPiece(Contents[i], false));
+                    Position[i].ChangeContent(new ChessPiece(Coordinate, Contents[i], false));
                 }
                 if (HNum > 2 && HNum < 7)
                 {
@@ -98,6 +99,7 @@ namespace Chess
                     EndIndex = i;
                 }
             }
+            Position[StartIndex].ContentPiece.SetCoordinate(Position[EndIndex].Coordinate);
             Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
             Position[StartIndex].ChangeContent(" ");
             Show();

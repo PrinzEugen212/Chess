@@ -4,9 +4,11 @@
     {
         public string Color { get; private set; }
         public string Type { get; private set; }
-        public ChessPiece(string T, bool C)
+        public string Coordinate { get; private set; }
+        public ChessPiece(string Coord, string T, bool C)
         {
             Type = T;
+            Coordinate = Coord;
             if (C)
             {
                 Color = "White";
@@ -15,6 +17,10 @@
             {
                 Color = "Black";
             }
+        }
+        public void SetCoordinate(string C)
+        {
+            Coordinate = C;
         }
     }
 }
