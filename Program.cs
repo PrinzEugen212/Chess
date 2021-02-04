@@ -13,10 +13,16 @@ namespace Chess
             while (t < 5950 / 2)
             {
                 Console.WriteLine("Ход белых:");
-                a.Move(Console.ReadLine());
+                string[] Parameters = Console.ReadLine().Split('-', ' ');
+                a.Move(new Coordinate(Parameters[0]), new Coordinate(Parameters[1]));
                 Console.WriteLine("Ход чёрных:");
-                a.Move(Console.ReadLine());
+                Parameters = Console.ReadLine().Split('-', ' ');
+                a.Move(new Coordinate(Parameters[0]), new Coordinate(Parameters[1]));
+                t++;
             }
+            //string[] Parameters = Console.ReadLine().Split('-', ' ');
+            //Coordinate A = new Coordinate(Parameters[0]);
+            //Console.WriteLine(A.Horizontal);
         }
     }
 }

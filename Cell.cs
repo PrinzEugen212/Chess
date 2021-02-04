@@ -1,33 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Chess
 {
     class Cell
     {
-        public string Coordinate { get; private set; }
+        public Coordinate Coordinate { get; private set; }
         public ChessPiece ContentPiece { get; private set; }
         public string Content { get; private set; }
         public string Color { get; private set; }
-        public Cell (string C)
+        public Cell (string coordinate)
         {
-            Coordinate = C;
+            Coordinate = new Coordinate(coordinate);
             Content = " ";
         }
-        public Cell(string Co, ChessPiece C)
+        public Cell(string coordinate, ChessPiece ChessPiece)
         {
-            Coordinate = Co;
-            ContentPiece = C;
+            Coordinate = new Coordinate(coordinate);
+            ContentPiece = ChessPiece;
         }
-        public void ChangeContent(string a)
+        public void ChangeContent(string content)
         {
-            Content = a;
+            Content = content;
             ContentPiece = null;
         }
-        public void ChangeContent(ChessPiece a)
+        public void ChangeContent(ChessPiece ChessPiece)
         {
-            ContentPiece = a;
+            ContentPiece = ChessPiece;
             Content = "";
         }
         public void Write()
@@ -41,9 +39,9 @@ namespace Chess
                 Console.Write(ContentPiece.Type);
             }
         }
-        public void SetColor(int c)
+        public void SetColor(int color)
         {
-            if (c == 1)
+            if (color == 1)
             {
                 Color = "White";
             }

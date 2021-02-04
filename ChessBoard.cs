@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Chess
 {
@@ -6,6 +10,7 @@ namespace Chess
     {
         public void Show()
         {
+            Console.Clear();
             int c1 = 8;
             int c2 = 0;
             for (int i = 0; i < 8; i++)
@@ -45,20 +50,20 @@ namespace Chess
             string P = "R N B Q K B N R " + "P P P P P P P P " + "P P P P P P P P " + "R N B Q K B N R ";
             string[] Contents = P.Split(' ');
             int VInd, HNum; // Vertical index and horizontal number, needed to calculate vertical and horizonal for cell or piece
-            for(int i = 0; i < 64; i++)
+            for(int i = 0; i < Position.Length; i++)
             {
                 VInd = i % 8;
                 HNum = Math.Abs(i / 8 - 8);
                 string Coordinate = Verticals[VInd].ToString() + HNum.ToString();
                 Position[i] = new Cell(Coordinate);
-                if (HNum == 1 || HNum == 2) 
+                if (HNum == 1 || HNum == 2) // 1 & 2 horizontals - white
                 {
-                    Position[i].ChangeContent(new ChessPiece(Coordinate, Contents[i-32], true));
+                    Position[i].ChangeContent(new ChessPiece(Coordinate, Convert.ToChar(Contents[i-32]),true));
 
                 }
-                if (HNum == 7 || HNum == 8)
+                if (HNum == 7 || HNum == 8) // 7 & 8 horizontals - black
                 {
-                    Position[i].ChangeContent(new ChessPiece(Coordinate, Contents[i], false));
+                    Position[i].ChangeContent(new ChessPiece(Coordinate, Convert.ToChar(Contents[i]), false));
                 }
                 if (HNum > 2 && HNum < 7)
                 {
@@ -84,25 +89,37 @@ namespace Chess
                 }
             }
         }
-        public void Move(string m)
+        public bool Move(Coordinate coordinateS, Coordinate coordinateE)
         {
-            string[] Parameters = m.Split('-',' ');
+            string[] Parameters = new string[2];
+            Parameters[0] = coordinateS.ToString();
+            Parameters[1] = coordinateE.ToString();
             int StartIndex = 0, EndIndex = 0;
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < Position.Length; i++)
             {
-                if(Position[i].Coordinate == Parameters[0])
+                if(Position[i].Coordinate.ToString() == Parameters[0])
                 {
                     StartIndex = i;
                 }
-                if (Position[i].Coordinate == Parameters[1])
+                if (Position[i].Coordinate.ToString() == Parameters[1])
                 {
                     EndIndex = i;
                 }
             }
-            Position[StartIndex].ContentPiece.SetCoordinate(Position[EndIndex].Coordinate);
-            Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
-            Position[StartIndex].ChangeContent(" ");
-            Show();
+
+            if (Position[StartIndex].ContentPiece.CheckMove(Position[StartIndex].ContentPiece, coordinateE))
+            {
+                Position[StartIndex].ContentPiece.SetCoordinate(Position[EndIndex].Coordinate.ToString());
+                Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
+                Position[StartIndex].ChangeContent(" ");
+                Show();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }
