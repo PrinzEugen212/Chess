@@ -73,5 +73,21 @@ namespace Chess
         {
             return StringCoordinate;
         }
+        public void SetCoordinate(int vertical, int horizontal)
+        {
+            Vertical = vertical;
+            Horizontal = horizontal;
+        }
+        public void SetCoordinate(int number, bool verticalOrNot)
+        {
+            if (verticalOrNot)
+            {
+                Vertical = number;
+            }
+            else
+            {
+                Horizontal = number;
+            }
+        }
     }
 }
