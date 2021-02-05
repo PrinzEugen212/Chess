@@ -24,18 +24,26 @@ namespace Chess
             if (pawn.Color == "White" ){
                 if (pawn.Coordinate.Horizontal == 2) // start horizontal for white
                 {
-                    pawnMoves = new Coordinate[2]; // only two cells for move
-                    for (int i = 0; i < pawnMoves.Length; i++)
+                    pawnMoves = new Coordinate[4]; // only two cells for move and two for take
+                    for (int i = 0; i < pawnMoves.Length/2; i++)
                     {
                         pawnMoves[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal + i + 1);
                     }
+                    pawnMoves[3] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal + 1);
+                    pawnMoves[4] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal + 1);
                 }
                 else
                 {
-                    pawnMoves = new Coordinate[1]; // only one cells for move
-                    for (int i = 0; i < pawnMoves.Length; i++)
+                    if(pawn.Coordinate.Horizontal + 1 < 9)
                     {
-                        pawnMoves[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal + i + 1);
+                        pawnMoves = new Coordinate[3]; // only one cells for move and two for take
+                        pawnMoves[0] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal + 1);
+                        pawnMoves[1] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal + 1);
+                        pawnMoves[2] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal + 1);
+                    }
+                    else
+                    {
+                        pawnMoves = new Coordinate[0];
                     }
                 }
             }
@@ -43,18 +51,26 @@ namespace Chess
             {
                 if (pawn.Coordinate.Horizontal == 7) // start horizontal for black
                 {
-                    pawnMoves = new Coordinate[2]; // only two cells for move
-                    for (int i = 0; i < pawnMoves.Length; i++)
+                    pawnMoves = new Coordinate[4]; // only two cells for move and two for take
+                    for (int i = 0; i < pawnMoves.Length/2; i++)
                     {
                         pawnMoves[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - i - 1);
                     }
+                    pawnMoves[3] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal - 1);
+                    pawnMoves[4] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal - 1);
                 }
                 else
                 {
-                    pawnMoves = new Coordinate[1]; // only one cells for move
-                    for (int i = 0; i < pawnMoves.Length; i++)
+                    if (pawn.Coordinate.Horizontal - 1 > 0)
                     {
-                        pawnMoves[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - i - 1);
+                        pawnMoves = new Coordinate[3]; // only one cells for move and two for take
+                        pawnMoves[0] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - 1);
+                        pawnMoves[1] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal - 1);
+                        pawnMoves[2] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal - 1);
+                    }
+                    else
+                    {
+                        pawnMoves = new Coordinate[0];
                     }
                 }
             }
