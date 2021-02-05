@@ -27,6 +27,11 @@
             switch (chessPiece.Type)
             {
                 case 'P': return CheckPawnMoves.CheckMove(chessPiece,endCoordinate);
+                case 'R': return CheckRockMoves.CheckMove(chessPiece, endCoordinate);
+                case 'N': return CheckKnightMoves.CheckMove(chessPiece, endCoordinate);
+                case 'B': return CheckBishopMoves.CheckMove(chessPiece, endCoordinate);
+                case 'Q': return CheckQueenMoves.CheckMove(chessPiece, endCoordinate);
+                case 'K': return CheckKingMoves.CheckMove(chessPiece, endCoordinate);
                 default:
                     return false;
             }
