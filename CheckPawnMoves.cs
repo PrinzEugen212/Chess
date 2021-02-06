@@ -29,8 +29,8 @@ namespace Chess
                     {
                         pawnMoves[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal + i + 1);
                     }
-                    pawnMoves[3] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal + 1);
-                    pawnMoves[4] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal + 1);
+                    pawnMoves[2] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal + 1);
+                    pawnMoves[3] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal + 1);
                 }
                 else
                 {
@@ -56,8 +56,8 @@ namespace Chess
                     {
                         pawnMoves[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - i - 1);
                     }
-                    pawnMoves[3] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal - 1);
-                    pawnMoves[4] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal - 1);
+                    pawnMoves[2] = new Coordinate(pawn.Coordinate.Vertical - 1, pawn.Coordinate.Horizontal - 1);
+                    pawnMoves[3] = new Coordinate(pawn.Coordinate.Vertical + 1, pawn.Coordinate.Horizontal - 1);
                 }
                 else
                 {
