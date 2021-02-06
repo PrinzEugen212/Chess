@@ -18,6 +18,7 @@
                 Color = "Black";
             }
         }
+        public ChessPiece() { }
         public void SetCoordinate(string coordinate)
         {
             Coordinate = new Coordinate(coordinate);
