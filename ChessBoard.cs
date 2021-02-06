@@ -71,35 +71,47 @@ namespace Chess
                 }
             }
         }
-        public bool Move(Coordinate coordinateS, Coordinate coordinateE)
+        public void Move(Coordinate coordinateS, Coordinate coordinateE)
         {
+
             string[] Parameters = new string[2];
             Parameters[0] = coordinateS.ToString();
             Parameters[1] = coordinateE.ToString();
+            for (int i = 0; i < Position.Length; i++)
+            {
+                if (Position[i].Coordinate.ToString() == Parameters[0])
+                {
+                    if(Position[i].ContentPiece == null)
+                    {
+                        throw new Exception("В ячейке с выбранной начальной координатой нет фигуры");
+                    }
+                }
+            }
             int StartIndex = 0, EndIndex = 0;
+            ChessPiece figure = new ChessPiece();
             for (int i = 0; i < Position.Length; i++)
             {
                 if(Position[i].Coordinate.ToString() == Parameters[0])
                 {
                     StartIndex = i;
+                    figure = Position[StartIndex].ContentPiece;
                 }
                 if (Position[i].Coordinate.ToString() == Parameters[1])
                 {
                     EndIndex = i;
                 }
             }
-            Log.Add(coordinateE.ToString(), Position[StartIndex].ContentPiece.Color, Position[StartIndex].ContentPiece.Type);
-            if (Position[StartIndex].ContentPiece.CheckMove(Position[StartIndex].ContentPiece, coordinateE))
+            if (figure.CheckMove(figure, coordinateE))
             {
-                Position[StartIndex].ContentPiece.SetCoordinate(Position[EndIndex].Coordinate.ToString());
-                Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
+                figure.SetCoordinate(coordinateE.ToString());
+                Position[EndIndex].ChangeContent(figure);
                 Position[StartIndex].ChangeContent(" ");
+                Log.Add(coordinateE.ToString(), figure.Color, figure.Type);
                 Show();
-                return true;
             }
             else
             {
-                return false;
+                throw new Exception("Невозможный ход");
             }
             
         }
