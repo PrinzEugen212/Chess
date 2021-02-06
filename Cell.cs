@@ -7,7 +7,6 @@ namespace Chess
         public Coordinate Coordinate { get; private set; }
         public ChessPiece ContentPiece { get; private set; }
         public string Content { get; private set; }
-        public string Color { get; private set; }
         public Cell (string coordinate)
         {
             Coordinate = new Coordinate(coordinate);
@@ -37,17 +36,6 @@ namespace Chess
             else
             {
                 Console.Write(ContentPiece.Type);
-            }
-        }
-        public void SetColor(int color)
-        {
-            if (color == 1)
-            {
-                Color = "White";
-            }
-            else
-            {
-                Color = "Black";
             }
         }
     }

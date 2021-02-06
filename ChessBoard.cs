@@ -41,7 +41,7 @@ namespace Chess
                 }
             }
             Console.WriteLine("   A  B  C  D  E  F  G  H");
-            Console.WriteLine();
+            Log.ShowInConsole();
         }
         Cell[] Position = new Cell[64];
         string[] Verticals = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
@@ -70,24 +70,6 @@ namespace Chess
                     Position[i].ChangeContent(" ");
                 }
             }
-            SetColorsForCells();
-        }
-        void SetColorsForCells()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if ((i + j) % 2 == 0)
-                    {
-                        Position[i + j].SetColor(1);
-                    }
-                    else
-                    {
-                        Position[i + j].SetColor(2);
-                    }
-                }
-            }
         }
         public bool Move(Coordinate coordinateS, Coordinate coordinateE)
         {
@@ -106,7 +88,7 @@ namespace Chess
                     EndIndex = i;
                 }
             }
-
+            Log.Add(coordinateE.ToString(), Position[StartIndex].ContentPiece.Color, Position[StartIndex].ContentPiece.Type);
             if (Position[StartIndex].ContentPiece.CheckMove(Position[StartIndex].ContentPiece, coordinateE))
             {
                 Position[StartIndex].ContentPiece.SetCoordinate(Position[EndIndex].Coordinate.ToString());
