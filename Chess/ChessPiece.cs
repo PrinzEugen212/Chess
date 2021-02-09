@@ -37,5 +37,19 @@
                     return false;
             }
         }
+        public Coordinate[] Path(ChessPiece chessPiece, Coordinate endCoordinate)
+        {
+            switch (chessPiece.Type)
+            {
+                case 'R': return CheckRockMoves.Path(chessPiece, endCoordinate);
+                case 'N': return CheckKnightMoves.Path(chessPiece, endCoordinate);
+                case 'P': return CheckPawnMoves.Path(chessPiece, endCoordinate);
+                case 'K': return CheckKingMoves.Path(chessPiece, endCoordinate);
+                case 'B': return CheckBishopMoves.Path(chessPiece, endCoordinate);
+                case 'Q': return CheckQueenMoves.Path(chessPiece, endCoordinate);
+                default:
+                    return new Coordinate[0];
+            }
+        }
     }
 }

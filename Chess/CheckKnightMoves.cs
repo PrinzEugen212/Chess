@@ -70,5 +70,14 @@ namespace Chess
             }
             return knightMoves;
         }
+        public static Coordinate[] Path(ChessPiece knight, Coordinate endCoordinate)
+        {
+            Coordinate[] Path = new Coordinate[1];
+            if (CheckMove(knight, endCoordinate))
+            {
+                Path[0] = endCoordinate;
+            }
+            return Path;
+        }
     }
 }

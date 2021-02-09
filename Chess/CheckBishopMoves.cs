@@ -59,5 +59,54 @@ namespace Chess
             }
             return bishopMoves;
         }
+        public static Coordinate[] Path(ChessPiece bishop, Coordinate endCoordinate)
+        {
+            Coordinate[] bishopPath, bishopLine = new Coordinate[7];
+            int vertical = bishop.Coordinate.Vertical, horizontal = bishop.Coordinate.Horizontal;
+            int endVertical = endCoordinate.Vertical, endHorizontal = endCoordinate.Horizontal;
+            int counter = 0;
+            if (endVertical - vertical > 0 && endHorizontal - horizontal > 0)
+            {
+                while (vertical < endVertical && horizontal < endHorizontal)
+                {
+                    vertical++; horizontal++;
+                    bishopLine[counter] = new Coordinate(vertical, horizontal);
+                    counter++;
+                }
+            }
+            else if (endVertical - vertical < 0 && endHorizontal - horizontal < 0)
+            {
+                while (vertical > endVertical && horizontal > endHorizontal)
+                {
+                    vertical--; horizontal--;
+                    bishopLine[counter] = new Coordinate(vertical, horizontal);
+                    counter++;
+                }
+            }
+            else if (endVertical - vertical < 0 && endHorizontal - horizontal > 0)
+            {
+                while (vertical > endVertical && horizontal < endHorizontal)
+                {
+                    vertical--; horizontal++;
+                    bishopLine[counter] = new Coordinate(vertical, horizontal);
+                    counter++;
+                }
+            }
+            else if (endVertical - vertical > 0 && endHorizontal - horizontal < 0)
+            {
+                while (vertical < endVertical && horizontal > endHorizontal)
+                {
+                    vertical++; horizontal--;
+                    bishopLine[counter] = new Coordinate(vertical, horizontal);
+                    counter++;
+                }
+            }
+            bishopPath = new Coordinate[counter];
+            for (int i = 0; i < counter; i++)
+            {
+                bishopPath[i] = bishopLine[i];
+            }
+            return bishopPath;
+        }
     }
 }

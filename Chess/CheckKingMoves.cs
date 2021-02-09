@@ -24,7 +24,7 @@ namespace Chess
             Coordinate[] allPossibleKingMoves = new Coordinate[8];
             int length = 0;
             int vertical = king.Coordinate.Vertical, horizontal = king.Coordinate.Horizontal;
-            if(vertical + 1 < 9)
+            if (vertical + 1 < 9)
             {
                 allPossibleKingMoves[length] = new Coordinate(vertical + 1, horizontal);
                 length++;
@@ -70,6 +70,21 @@ namespace Chess
                 kingMoves[i] = allPossibleKingMoves[i];
             }
             return kingMoves;
+        }
+        public static Coordinate[] Path(ChessPiece king, Coordinate endCoordinate)
+        {
+            Coordinate[] Path;
+            if (CheckMove(king, endCoordinate))
+            {
+                Path = new Coordinate[1];
+                Path[0] = endCoordinate;
+                return Path;
+            }
+            else
+            {
+                Path = new Coordinate[0];
+                return Path;
+            }
         }
     }
 }

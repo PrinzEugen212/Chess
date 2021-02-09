@@ -160,5 +160,71 @@ namespace Chess
             }
             return pawnMoves;
         }
+        public static Coordinate[] Path(ChessPiece pawn, Coordinate endCoordinate)
+        {
+            Coordinate[] Path;
+            if (CheckMove(pawn, endCoordinate))
+            {
+                if(pawn.Color == "White")
+                {
+                    if (Math.Abs(pawn.Coordinate.Vertical - endCoordinate.Vertical) == 1)
+                    {
+                        Path = new Coordinate[1];
+                        Path[0] = endCoordinate;
+                        return Path;
+                    }
+                    else if (pawn.Coordinate.Horizontal == 2)
+                    {
+                        Path = new Coordinate[2];
+                        for (int i = 0; i < Path.Length; i++)
+                        {
+                            Path[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal + i + 1);
+                        }
+                        return Path;
+                    }
+                    else
+                    {
+                        Path = new Coordinate[1];
+                        for (int i = 0; i < Path.Length; i++)
+                        {
+                            Path[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal + i + 1);
+                        }
+                        return Path;
+                    }
+                }
+                else
+                {
+                    if (Math.Abs(pawn.Coordinate.Vertical - endCoordinate.Vertical) == 1)
+                    {
+                        Path = new Coordinate[1];
+                        Path[0] = endCoordinate;
+                        return Path;
+                    }
+                    else if (pawn.Coordinate.Horizontal == 7)
+                    {
+                        Path = new Coordinate[2];
+                        for (int i = 0; i < Path.Length; i++)
+                        {
+                            Path[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - i - 1);
+                        }
+                        return Path;
+                    }
+                    else
+                    {
+                        Path = new Coordinate[1];
+                        for (int i = 0; i < Path.Length; i++)
+                        {
+                            Path[i] = new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - i - 1);
+                        }
+                        return Path;
+                    }
+                }
+            }
+            else
+            {
+                Path = new Coordinate[0];
+                return Path;
+            }
+        }
     }
 }

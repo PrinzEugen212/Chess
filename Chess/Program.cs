@@ -20,9 +20,6 @@ namespace Chess
                 a.Move(new Coordinate(Parameters[0]), new Coordinate(Parameters[1]));
                 t++;
             }
-            //string[] Parameters = Console.ReadLine().Split('-', ' ');
-            //Coordinate A = new Coordinate(Parameters[0]);
-            //Console.WriteLine(A.Horizontal);
         }
     }
 }

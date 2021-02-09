@@ -34,5 +34,18 @@ namespace Chess
             }
             return queenMoves;
         }
+        public static Coordinate[] Path(ChessPiece queen, Coordinate endCoordinate)
+        {
+            Coordinate[] queenPath;
+            if(Math.Abs(queen.Coordinate.Vertical - endCoordinate.Vertical) == 1 && Math.Abs(queen.Coordinate.Horizontal - endCoordinate.Horizontal) == 1)
+            {
+                queenPath = CheckBishopMoves.Path(queen, endCoordinate);
+            }
+            else
+            {
+                queenPath = CheckRockMoves.Path(queen, endCoordinate);
+            }
+            return queenPath;
+        }
     }
 }

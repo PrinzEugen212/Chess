@@ -71,12 +71,13 @@ namespace Chess
                 }
             }
         }
-        public void Move(Coordinate coordinateS, Coordinate coordinateE)
+        public void Move(Coordinate startCoordinate, Coordinate endCoordinate)
         {
 
             string[] Parameters = new string[2];
-            Parameters[0] = coordinateS.ToString();
-            Parameters[1] = coordinateE.ToString();
+            Parameters[0] = startCoordinate.ToString();
+            Parameters[1] = endCoordinate.ToString();
+            Coordinate[] figurePath;
             for (int i = 0; i < Position.Length; i++)
             {
                 if (Position[i].Coordinate.ToString() == Parameters[0])
@@ -101,12 +102,13 @@ namespace Chess
                     EndIndex = i;
                 }
             }
-            if (figure.CheckMove(figure, coordinateE))
+            if (figure.CheckMove(figure, endCoordinate))
             {
-                figure.SetCoordinate(coordinateE.ToString());
+                figurePath = figure.Path(figure, endCoordinate);
+                figure.SetCoordinate(endCoordinate.ToString());
                 Position[EndIndex].ChangeContent(figure);
                 Position[StartIndex].ChangeContent(" ");
-                Log.Add(coordinateE.ToString(), figure.Color, figure.Type);
+                Log.Add(endCoordinate.ToString(), figure.Color, figure.Type);
                 Show();
             }
             else
