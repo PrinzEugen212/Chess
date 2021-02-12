@@ -8,41 +8,6 @@ namespace Chess
 {
     class ChessBoard
     {
-        public void Show()
-        {
-            Console.Clear();
-            int c1 = 8;
-            int c2 = 0;
-            for (int i = 0; i < 8; i++)
-            {
-                Console.Write(c1 + " ");
-                c1--;
-                for (int j = 0; j < 8; j++)
-                {
-                    if ((i+j) % 2 == 0)
-                    {
-                        Console.BackgroundColor = ConsoleColor.White; 
-                        Console.ForegroundColor = ConsoleColor.Black; 
-                    }
-                    else
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkGray;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                    }
-                    Console.Write(" ");
-                    Position[c2].Write();
-                    c2++;
-                    Console.Write(" ");
-                    if (j == 7)
-                    {
-                        Console.ResetColor();
-                        Console.WriteLine();
-                    }
-                }
-            }
-            Console.WriteLine("   A  B  C  D  E  F  G  H");
-            Log.ShowInConsole();
-        }
         Cell[] Position = new Cell[64];
         string[] Verticals = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
         public void SetStandartPosition()
@@ -109,13 +74,18 @@ namespace Chess
                 Position[EndIndex].ChangeContent(figure);
                 Position[StartIndex].ChangeContent(" ");
                 Log.Add(endCoordinate.ToString(), figure.Color, figure.Type);
-                Show();
+                Render.ShowBoard(Position);
             }
             else
             {
                 throw new Exception("Невозможный ход");
             }
             
+        }
+
+        public Cell[] GetPosition()
+        {
+            return Position;
         }
     }
 }

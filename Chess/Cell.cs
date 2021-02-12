@@ -27,16 +27,5 @@ namespace Chess
             ContentPiece = ChessPiece;
             Content = "";
         }
-        public void Write()
-        {
-            if(ContentPiece == null)
-            {
-                Console.Write(Content);
-            }
-            else
-            {
-                Console.Write(ContentPiece.Type);
-            }
-        }
     }
 }
