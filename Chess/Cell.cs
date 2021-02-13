@@ -12,7 +12,7 @@ namespace Chess
         /// Создаёт экземпляр класса с заданной координатой
         /// </summary>
         /// <param name="coordinate">Координата, формат должен быть аналогичен Е4</param>
-        public Cell (string coordinate)
+        public Cell(string coordinate)
         {
             Coordinate = new Coordinate(coordinate);
             Content = " ";
@@ -29,11 +29,8 @@ namespace Chess
         /// <param name="content">Строка, должна состоять только из пробела</param>
         public void ChangeContent(string content)
         {
-            if (content == "")
-            {
-                Content = content;
-                ContentPiece = null;
-            }
+            Content = content;
+            ContentPiece = null;
         }
 
         /// <summary>

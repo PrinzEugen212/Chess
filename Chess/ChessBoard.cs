@@ -87,7 +87,7 @@ namespace Chess
             }
             if (figure.CheckMove(figure, endCoordinate))
             {
-                figurePath = figure.Path(figure, endCoordinate);
+                //figurePath = figure.Path(figure, endCoordinate);
                 figure.SetCoordinate(endCoordinate.ToString());
                 Position[EndIndex].ChangeContent(figure);
                 Position[StartIndex].ChangeContent(" ");
