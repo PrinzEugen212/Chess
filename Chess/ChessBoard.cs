@@ -10,7 +10,19 @@ namespace Chess
     {
         Cell[] Position = new Cell[64];
         string[] Verticals = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
-        public void SetStandartPosition()
+
+        /// <summary>
+        /// Создаётся новый экземпляр доски с установленной стандартной начальной позицией
+        /// </summary>
+        public ChessBoard()
+        {
+            SetStandartPosition();
+        }
+
+        /// <summary>
+        /// Устанавливает начальную позицию фигур на доске
+        /// </summary>
+        private void SetStandartPosition()
         {
             string P = "R N B Q K B N R " + "P P P P P P P P " + "P P P P P P P P " + "R N B Q K B N R ";
             string[] Contents = P.Split(' ');
@@ -36,6 +48,12 @@ namespace Chess
                 }
             }
         }
+
+        /// <summary>
+        /// Перемещает фигуру из начальной координаты в конечную, если это возможно
+        /// </summary>
+        /// <param name="startCoordinate"></param>
+        /// <param name="endCoordinate"></param>
         public void Move(Coordinate startCoordinate, Coordinate endCoordinate)
         {
 
@@ -74,7 +92,7 @@ namespace Chess
                 Position[EndIndex].ChangeContent(figure);
                 Position[StartIndex].ChangeContent(" ");
                 Log.Add(endCoordinate.ToString(), figure.Color, figure.Type);
-                Render.ShowBoard(Position);
+                Render.ShowBoard(this);
             }
             else
             {
@@ -83,6 +101,10 @@ namespace Chess
             
         }
 
+        /// <summary>
+        /// Возвращает текущую позицию на доске
+        /// </summary>
+        /// <returns></returns>
         public Cell[] GetPosition()
         {
             return Position;

@@ -9,19 +9,29 @@ namespace Chess
         public int Horizontal { get; private set; }
         public int Vertical { get; private set; }
         private string StringCoordinate;
+        /// <summary>
+        /// Создаёт экземпляр класса с переданной координатой
+        /// </summary>
+        /// <param name="Coordinate">Координата, формат должен быть аналогичен E4</param>
         public Coordinate(string Coordinate)
         {
             StringCoordinate = Coordinate;
             Horizontal = HorizontalFactory(Coordinate[1]);
             Vertical = VerticalFactory(Coordinate[0]);
         }
+
+        /// <summary>
+        /// Создаёт экземпляр класса по номеру вертикали и горизонтали
+        /// </summary>
+        /// <param name="vertical">Номер вертикали, от 1 до 8</param>
+        /// <param name="horizontal">Номер горизонтали, от 1 до 8</param>
         public Coordinate(int vertical, int horizontal)
         {
             Horizontal = horizontal;
             Vertical = vertical;
             StringCoordinate = VerticalFactory(vertical).ToString() + horizontal.ToString();
         }
-        public int VerticalFactory(char vertical) // from char to int
+        private int VerticalFactory(char vertical) // from char to int
         {
             switch (vertical)
             {
@@ -37,7 +47,7 @@ namespace Chess
                     return 0;
             }
         }
-        public char VerticalFactory(int vertical) // from int to cahr
+        private char VerticalFactory(int vertical) // from int to cahr
         {
             switch (vertical)
             {
@@ -53,7 +63,7 @@ namespace Chess
                     return 'U';
             }
         }
-        public int HorizontalFactory(char horizontal) // from char to int
+        private int HorizontalFactory(char horizontal) // from char to int
         {
             switch (horizontal)
             {
@@ -69,25 +79,29 @@ namespace Chess
                     return 0;
             }
         }
+        /// <summary>
+        /// Возвращает координату в виде строки, например E4
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return StringCoordinate;
         }
-        public void SetCoordinate(int vertical, int horizontal)
-        {
-            Vertical = vertical;
-            Horizontal = horizontal;
-        }
-        public void SetCoordinate(int number, bool verticalOrNot)
-        {
-            if (verticalOrNot)
-            {
-                Vertical = number;
-            }
-            else
-            {
-                Horizontal = number;
-            }
-        }
+        //public void SetCoordinate(int vertical, int horizontal)
+        //{
+        //    Vertical = vertical;
+        //    Horizontal = horizontal;
+        //}
+        //public void SetCoordinate(int number, bool verticalOrNot)
+        //{
+        //    if (verticalOrNot)
+        //    {
+        //        Vertical = number;
+        //    }
+        //    else
+        //    {
+        //        Horizontal = number;
+        //    }
+        //}
     }
 }

@@ -5,6 +5,13 @@
         public string Color { get; private set; }
         public char Type { get; private set; }
         public Coordinate Coordinate { get; private set; }
+
+        /// <summary>
+        /// Создаёт фигуру с заданной координатой, типом и цветом
+        /// </summary>
+        /// <param name="coordinate">Положение фигуры на доске, формат должен быть аналогичен E4</param>
+        /// <param name="type">Тип фигуры, P - пешка, N - конь, B - слон, R - ладья, Q - ферзь, K - король</param>
+        /// <param name="color">Цвет фигуры. true - белый, false - чёрный</param>
         public ChessPiece(string coordinate, char type, bool color)
         {
             Type = type;
@@ -18,11 +25,27 @@
                 Color = "Black";
             }
         }
+        
+        /// <summary>
+        /// Создаёт фигуру со значениями по умолчанию
+        /// </summary>
         public ChessPiece() { }
+
+        /// <summary>
+        /// Устанавливает фигуре переданную координату
+        /// </summary>
+        /// <param name="coordinate">Координата, формат должен быть аналогичен Е4</param>
         public void SetCoordinate(string coordinate)
         {
             Coordinate = new Coordinate(coordinate);
         }
+
+        /// <summary>
+        /// Проверяет, может ли переданная фигура переместиться в переданную координату. Положение остальных фигур не учитывается
+        /// </summary>
+        /// <param name="chessPiece">Передвигаемая фигура</param>
+        /// <param name="endCoordinate">Координата, в которую фигура должна попасть</param>
+        /// <returns></returns>
         public bool CheckMove(ChessPiece chessPiece, Coordinate endCoordinate)
         {
             switch (chessPiece.Type)
@@ -37,6 +60,13 @@
                     return false;
             }
         }
+
+        /// <summary>
+        /// Возврашает путь переданной фигуры от текущего положения до переданной координаты
+        /// </summary>
+        /// <param name="chessPiece">Фигура, путь которой нужно узнать</param>
+        /// <param name="endCoordinate">Координата, до которой нужно узнать путь</param>
+        /// <returns></returns>
         public Coordinate[] Path(ChessPiece chessPiece, Coordinate endCoordinate)
         {
             switch (chessPiece.Type)

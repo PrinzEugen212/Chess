@@ -11,11 +11,18 @@ namespace MyLibrary
         private int capacity = 4;
         private int index = -1;
 
+        /// <summary>
+        /// Создаётся новый массив стандартной вместимости
+        /// </summary>
         public DynamicArray()
         {
             data = new T[capacity];
         }
 
+        /// <summary>
+        /// Создаётся новый массив заданной длины
+        /// </summary>
+        /// <param name="cap"></param>
         public DynamicArray(int cap)
         {
             if (cap > 0)
@@ -24,6 +31,10 @@ namespace MyLibrary
                 data = new T[capacity];
             }
         }
+        /// <summary>
+        /// Создаётся новый массив, равный по длине и содержанию переданному массиву
+        /// </summary>
+        /// <param name="array"></param>
         public DynamicArray(T[] array)
         {
             capacity = array.Length;
@@ -31,11 +42,19 @@ namespace MyLibrary
 
         }
 
+        /// <summary>
+        /// Возвращает количество элементов в массиве
+        /// </summary>
+        /// <returns></returns>
         public int Count()
         {
             return index;
         }
 
+        /// <summary>
+        /// Добавляет в массив элемент с переданным значением
+        /// </summary>
+        /// <param name="value">Значение элемента, который нужно добавить</param>
         public void Add(T value)
         {
             index++;
@@ -52,6 +71,10 @@ namespace MyLibrary
             data[index] = value;
         }
 
+        /// <summary>
+        /// Удаляет элемент с переданным значением из массива
+        /// </summary>
+        /// <param name="value">Значение элемента, который нужно удалить</param>
         public void Remove(T value)
         {
             int findedIndex = -1;
@@ -70,6 +93,10 @@ namespace MyLibrary
             Remove(findedIndex);
         }
 
+        /// <summary>
+        /// Удаляет элемент с переданным индексом из массива
+        /// </summary>
+        /// <param name="indexForRemove">Индекс элемента, который нужно удалить</param>
         public void Remove(int indexForRemove)
         {
             CheckIndex(indexForRemove);
@@ -80,16 +107,34 @@ namespace MyLibrary
             index--;
         }
 
+        /// <summary>
+        /// Возвращает значение элемента с переданным индексом
+        /// </summary>
+        /// <param name="indexForReturn">Индекс, значение которого нужно вернуть</param>
+        /// <returns></returns>
         public T Get(int indexForReturn)
         {
             CheckIndex(indexForReturn);
             return data[indexForReturn];
         }
 
+        /// <summary>
+        /// Записывает переданное значение в элемент с переданным индексом
+        /// </summary>
+        /// <param name="value">Нужное значение элемента</param>
+        /// <param name="indexForSet">Нужный индекс</param>
         public void Set(T value, int indexForSet)
         {
             CheckIndex(indexForSet);
             data[indexForSet] = value;
+        }
+
+        public T this[int index]
+        {
+            get
+            {
+                return data[index];
+            }
         }
 
         private void CheckIndex(int indexForCheck)

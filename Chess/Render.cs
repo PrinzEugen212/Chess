@@ -6,9 +6,13 @@ namespace Chess
 {
     static class Render
     {
-
-        public static void ShowBoard(Cell[] position)
+        /// <summary>
+        /// Выводит в консоль позицию на переданной доске
+        /// </summary>
+        /// <param name="position"></param>
+        public static void ShowBoard(ChessBoard chessBoard)
         {
+            Cell[] position = chessBoard.GetPosition();
             Console.Clear();
             int c1 = 8;
             int c2 = 0;
@@ -44,6 +48,9 @@ namespace Chess
             ShowLog();
         }
 
+        /// <summary>
+        /// Выводит в консоль запись текущей партии
+        /// </summary>
         public static void ShowLog()
         {
             Console.SetCursorPosition(30, 0);
@@ -51,7 +58,11 @@ namespace Chess
             Console.SetCursorPosition(0, 10);
         }
 
-        public static void ShowCell(Cell cell)
+        /// <summary>
+        /// Выводит в консоль значение переданной ячейки
+        /// </summary>
+        /// <param name="cell"></param>
+        private static void ShowCell(Cell cell)
         {
             if (cell.ContentPiece == null)
             {
