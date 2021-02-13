@@ -7,8 +7,7 @@ namespace Chess
         static void Main(string[] args)
         {
             ChessBoard a = new ChessBoard();
-            a.SetStandartPosition();
-            Render.ShowBoard(a.GetPosition());
+            Render.ShowBoard(a);
             int t = 0;
             while (t < 5950 / 2)
             {
