@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MyLibrary;
 
 namespace Chess
 {
@@ -8,35 +9,33 @@ namespace Chess
     {
         public static bool CheckMove(ChessPiece queen, Coordinate endCoordinate)
         {
-            Coordinate[] Coordinates = Moves(queen);
-            foreach (var coordinateInArray in Coordinates)
+            DynamicArray<Coordinate> Coordinates = Moves(queen);
+            for (int i = 0; i < Coordinates.Count(); i++)
             {
-                if (coordinateInArray.ToString() == endCoordinate.ToString())
+                if (Coordinates[i].ToString() == endCoordinate.ToString())
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static Coordinate[] Moves(ChessPiece queen)
+        public static DynamicArray<Coordinate> Moves(ChessPiece queen)
         {
-            Coordinate[] queenMoves;
-            Coordinate[] Bishop = CheckBishopMoves.Moves(queen), Rock = CheckRockMoves.Moves(queen);
-            int length = Bishop.Length + Rock.Length;
-            queenMoves = new Coordinate[length]; // rock always have maximum 14 moves, they do not depend on the piece color
-            for (int i = 0; i < Bishop.Length; i++)
+            DynamicArray<Coordinate> Bishop = CheckBishopMoves.Moves(queen), Rock = CheckRockMoves.Moves(queen);
+            DynamicArray<Coordinate> queenMoves = new DynamicArray<Coordinate>(); // rock always have maximum 14 moves, they do not depend on the piece color
+            for (int i = 0; i < Bishop.Count(); i++)
             {
                 queenMoves[i] = Bishop[i];
             }
-            for (int i = 0; i < Rock.Length; i++)
+            for (int i = 0; i < Rock.Count(); i++)
             {
-                queenMoves[i + Bishop.Length] = Rock[i];
+                queenMoves[i + Bishop.Count()] = Rock[i];
             }
             return queenMoves;
         }
-        public static Coordinate[] Path(ChessPiece queen, Coordinate endCoordinate)
+        public static DynamicArray<Coordinate> Path(ChessPiece queen, Coordinate endCoordinate)
         {
-            Coordinate[] queenPath;
+            DynamicArray<Coordinate> queenPath;
             if(Math.Abs(queen.Coordinate.Vertical - endCoordinate.Vertical) == 1 && Math.Abs(queen.Coordinate.Horizontal - endCoordinate.Horizontal) == 1)
             {
                 queenPath = CheckBishopMoves.Path(queen, endCoordinate);

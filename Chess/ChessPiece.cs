@@ -1,4 +1,6 @@
-﻿namespace Chess
+﻿using MyLibrary;
+
+namespace Chess
 {
     class ChessPiece
     {
@@ -67,7 +69,7 @@
         /// <param name="chessPiece">Фигура, путь которой нужно узнать</param>
         /// <param name="endCoordinate">Координата, до которой нужно узнать путь</param>
         /// <returns></returns>
-        public Coordinate[] Path(ChessPiece chessPiece, Coordinate endCoordinate)
+        public DynamicArray<Coordinate> Path(ChessPiece chessPiece, Coordinate endCoordinate)
         {
             switch (chessPiece.Type)
             {
@@ -78,7 +80,7 @@
                 case 'B': return CheckBishopMoves.Path(chessPiece, endCoordinate);
                 case 'Q': return CheckQueenMoves.Path(chessPiece, endCoordinate);
                 default:
-                    return new Coordinate[0];
+                    return new DynamicArray<Coordinate>();
             }
         }
     }

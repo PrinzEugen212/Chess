@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyLibrary;
 
 namespace Chess
 {
@@ -60,7 +61,7 @@ namespace Chess
             string[] Parameters = new string[2];
             Parameters[0] = startCoordinate.ToString();
             Parameters[1] = endCoordinate.ToString();
-            Coordinate[] figurePath;
+            DynamicArray<Coordinate> figurePath;
             for (int i = 0; i < Position.Length; i++)
             {
                 if (Position[i].Coordinate.ToString() == Parameters[0])
@@ -87,7 +88,7 @@ namespace Chess
             }
             if (figure.CheckMove(figure, endCoordinate))
             {
-                //figurePath = figure.Path(figure, endCoordinate);
+                figurePath = figure.Path(figure, endCoordinate);
                 figure.SetCoordinate(endCoordinate.ToString());
                 Position[EndIndex].ChangeContent(figure);
                 Position[StartIndex].ChangeContent(" ");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MyLibrary;
 
 namespace Chess
 {
@@ -8,55 +9,49 @@ namespace Chess
     {
         public static bool CheckMove(ChessPiece rock, Coordinate endCoordinate)
         {
-            Coordinate[] Coordinates = Moves(rock);
-            foreach (var coordinateInArray in Coordinates)
+            DynamicArray<Coordinate> Coordinates = Moves(rock);
+
+            for (int i = 0; i < Coordinates.Count(); i++)
             {
-                if (coordinateInArray.ToString() == endCoordinate.ToString())
+                if (Coordinates[i].ToString() == endCoordinate.ToString())
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static Coordinate[] Moves(ChessPiece rock)
+        public static DynamicArray<Coordinate> Moves(ChessPiece rock)
         {
-            Coordinate[] rockMoves = new Coordinate[14];
-            int length = 0;
+            DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int startVertical = rock.Coordinate.Vertical, startHorizontal = rock.Coordinate.Horizontal;
             int vertical = startVertical, horizontal = startHorizontal;
             while (vertical < 8)
             {
                 vertical++;
-                rockMoves[length] = new Coordinate(vertical, horizontal);
-                length++;
+                moves.Add(new Coordinate(vertical, horizontal));
             }
             vertical = startVertical;
             while (horizontal > 1)
             {
                 horizontal--;
-                rockMoves[length] = new Coordinate(vertical, horizontal);
-                length++;
+                moves.Add(new Coordinate(vertical, horizontal));
             }
             horizontal = startHorizontal;
             while (horizontal < 8)
             {
                 horizontal++;
-                rockMoves[length] = new Coordinate(vertical, horizontal);
-                length++;
+                moves.Add(new Coordinate(vertical, horizontal));
             }
-            horizontal = startHorizontal;
             while (vertical > 1)
             {
                 vertical--;
-                rockMoves[length] = new Coordinate(vertical, horizontal);
-                length++;
+                moves.Add(new Coordinate(vertical, horizontal));
             }
-            return rockMoves;
+            return moves;
         }
-        public static Coordinate[] Path(ChessPiece rock, Coordinate endCoordinate)
+        public static DynamicArray<Coordinate> Path(ChessPiece rock, Coordinate endCoordinate)
         {
-            Coordinate[] rockPath, RockLine = new Coordinate[8];
-            int counter = 0;
+            DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int vertical, horizontal;
             if(rock.Coordinate.Vertical > endCoordinate.Vertical)
             {
@@ -64,8 +59,7 @@ namespace Chess
                 while (vertical > endCoordinate.Vertical)
                 {
                     vertical--;
-                    RockLine[counter] = new Coordinate(vertical, rock.Coordinate.Horizontal);
-                    counter++;
+                    moves.Add(new Coordinate(vertical, rock.Coordinate.Horizontal));
                 }
             }
             else if (rock.Coordinate.Vertical < endCoordinate.Vertical)
@@ -74,8 +68,7 @@ namespace Chess
                 while (vertical < endCoordinate.Vertical)
                 {
                     vertical++;
-                    RockLine[counter] = new Coordinate(vertical, rock.Coordinate.Horizontal);
-                    counter++;
+                    moves.Add(new Coordinate(vertical, rock.Coordinate.Horizontal));
                 }
             }
             else if (rock.Coordinate.Horizontal > endCoordinate.Horizontal)
@@ -84,8 +77,7 @@ namespace Chess
                 while (horizontal > endCoordinate.Horizontal)
                 {
                     horizontal--;
-                    RockLine[counter] = new Coordinate(rock.Coordinate.Vertical, horizontal);
-                    counter++;
+                    moves.Add(new Coordinate(rock.Coordinate.Vertical, horizontal));
                 }
             }
             else if (rock.Coordinate.Horizontal < endCoordinate.Horizontal)
@@ -94,17 +86,11 @@ namespace Chess
                 while (horizontal < endCoordinate.Horizontal)
                 {
                     horizontal++;
-                    RockLine[counter] = new Coordinate(rock.Coordinate.Vertical, horizontal);
-                    counter++;
+                    moves.Add(new Coordinate(rock.Coordinate.Vertical, horizontal));
                 }
 
             }
-            rockPath = new Coordinate[counter];
-            for (int i = 0; i < counter; i++)
-            {
-                rockPath[i] = RockLine[i];
-            }
-            return rockPath;
+            return moves;
         }
     }
 }
