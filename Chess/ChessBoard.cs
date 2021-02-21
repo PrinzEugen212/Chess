@@ -50,6 +50,18 @@ namespace Chess
             }
         }
 
+        private Cell FindCell(Coordinate coordinate)
+        {
+            foreach (var cell in Position)
+            {
+                if (cell.Coordinate.Vertical == coordinate.Vertical && cell.Coordinate.Horizontal == coordinate.Horizontal)
+                {
+                    return cell;
+                }
+            }
+            return Position[0];
+        }
+
         /// <summary>
         /// Перемещает фигуру из начальной координаты в конечную, если это возможно
         /// </summary>
@@ -62,6 +74,7 @@ namespace Chess
             Parameters[0] = startCoordinate.ToString();
             Parameters[1] = endCoordinate.ToString();
             DynamicArray<Coordinate> figurePath;
+            Cell cell;
             for (int i = 0; i < Position.Length; i++)
             {
                 if (Position[i].Coordinate.ToString() == Parameters[0])
@@ -89,6 +102,24 @@ namespace Chess
             if (figure.CheckMove(figure, endCoordinate))
             {
                 figurePath = figure.Path(figure, endCoordinate);
+                for (int i = 0; i < figurePath.Count(); i++)
+                {
+                    cell = FindCell(figurePath[i]);
+
+                    if (i == figurePath.Count() - 1)
+                    {
+                        if (cell.ContentPiece != null && cell.ContentPiece.Color == figure.Color)
+                        {
+                            throw new Exception("Невозможный ход");
+                        }
+                    }
+
+                    if (cell.Contains())
+                    {
+                        throw new Exception("Невозможный ход");
+                    }
+
+                }
                 figure.SetCoordinate(endCoordinate.ToString());
                 Position[EndIndex].ChangeContent(figure);
                 Position[StartIndex].ChangeContent(" ");

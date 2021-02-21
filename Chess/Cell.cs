@@ -42,5 +42,17 @@ namespace Chess
             ContentPiece = ChessPiece;
             Content = "";
         }
+        /// <summary>
+        /// Возвращает истину если клетка содержит какую-либо фигуру, ложь если клетка пуста
+        /// </summary>
+        /// <returns></returns>
+        public bool Contains()
+        {
+            if (ContentPiece != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

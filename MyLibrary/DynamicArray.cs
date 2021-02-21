@@ -48,7 +48,7 @@ namespace MyLibrary
         /// <returns></returns>
         public int Count()
         {
-            return index;
+            return index+1;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace MyLibrary
         public void Remove(T value)
         {
             int findedIndex = -1;
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i <= index; i++)
             {
                 if (data[i].Equals(value))
                 {
@@ -90,14 +90,14 @@ namespace MyLibrary
             {
                 throw new Exception("Объект не найден");
             }
-            Remove(findedIndex);
+            RemoveAt(findedIndex);
         }
 
         /// <summary>
         /// Удаляет элемент с переданным индексом из массива
         /// </summary>
         /// <param name="indexForRemove">Индекс элемента, который нужно удалить</param>
-        public void Remove(int indexForRemove)
+        public void RemoveAt(int indexForRemove)
         {
             CheckIndex(indexForRemove);
             for (int i = indexForRemove; i < index; i++)
