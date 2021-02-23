@@ -133,7 +133,11 @@ namespace MyLibrary
         {
             get
             {
-                return data[index];
+                return Get(index);
+            }
+            set
+            {
+                Set(value, index);
             }
         }
 
