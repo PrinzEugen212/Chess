@@ -36,12 +36,12 @@ namespace Chess
                 Position[i] = new Cell(Coordinate);
                 if (HNum == 1 || HNum == 2) // 1 & 2 horizontals - white
                 {
-                    Position[i].ChangeContent(new ChessPiece(Coordinate, Convert.ToChar(Contents[i-32]),true));
+                    Position[i].ChangeContent(ChessFactory.Create(Coordinate, Convert.ToChar(Contents[i - 32]), true));
 
                 }
                 if (HNum == 7 || HNum == 8) // 7 & 8 horizontals - black
                 {
-                    Position[i].ChangeContent(new ChessPiece(Coordinate, Convert.ToChar(Contents[i]), false));
+                    Position[i].ChangeContent(ChessFactory.Create(Coordinate, Convert.ToChar(Contents[i]), false));
                 }
                 if (HNum > 2 && HNum < 7)
                 {
@@ -86,29 +86,27 @@ namespace Chess
                 }
             }
             int StartIndex = 0, EndIndex = 0;
-            ChessPiece figure = new ChessPiece();
             for (int i = 0; i < Position.Length; i++)
             {
                 if(Position[i].Coordinate.ToString() == Parameters[0])
                 {
                     StartIndex = i;
-                    figure = Position[StartIndex].ContentPiece;
                 }
                 if (Position[i].Coordinate.ToString() == Parameters[1])
                 {
                     EndIndex = i;
                 }
             }
-            if (figure.CheckMove(figure, endCoordinate))
+            if (Position[StartIndex].ContentPiece.CheckMove(Position[StartIndex].ContentPiece, endCoordinate))
             {
-                figurePath = figure.Path(figure, endCoordinate);
+                figurePath = Position[StartIndex].ContentPiece.Path(Position[StartIndex].ContentPiece, endCoordinate);
                 for (int i = 0; i < figurePath.Count(); i++)
                 {
                     cell = FindCell(figurePath[i]);
 
                     if (i == figurePath.Count() - 1)
                     {
-                        if (cell.ContentPiece != null && cell.ContentPiece.Color == figure.Color)
+                        if (cell.ContentPiece != null && cell.ContentPiece.Color == Position[StartIndex].ContentPiece.Color)
                         {
                             throw new Exception("Невозможный ход");
                         }
@@ -118,12 +116,11 @@ namespace Chess
                     {
                         throw new Exception("Невозможный ход");
                     }
-
                 }
-                figure.SetCoordinate(endCoordinate.ToString());
-                Position[EndIndex].ChangeContent(figure);
+                Position[StartIndex].ContentPiece.SetCoordinate(endCoordinate.ToString());
+                Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
                 Position[StartIndex].ChangeContent(" ");
-                Log.Add(endCoordinate.ToString(), figure.Color, figure.Type);
+                Log.Add(endCoordinate.ToString(), Position[EndIndex].ContentPiece.Color, Position[EndIndex].ContentPiece.Type);
                 Render.ShowBoard(this);
             }
             else

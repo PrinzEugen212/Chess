@@ -5,9 +5,19 @@ using MyLibrary;
 
 namespace Chess
 {
-    abstract class CheckRockMoves
+    public class Rock : ChessPiece
     {
-        public static bool CheckMove(ChessPiece rock, Coordinate endCoordinate)
+        public override char Type { get; } = 'R';
+        public Rock(string coordinate, bool color) : base(coordinate, color)
+        {
+
+        }
+        public Rock(Coordinate coordinate, string color) : base(coordinate, color)
+        {
+
+        }
+        public Rock() { }
+        public override bool CheckMove(ChessPiece rock, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> Coordinates = Moves(rock);
 
@@ -20,7 +30,7 @@ namespace Chess
             }
             return false;
         }
-        public static DynamicArray<Coordinate> Moves(ChessPiece rock)
+        public override DynamicArray<Coordinate> Moves(ChessPiece rock)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int startVertical = rock.Coordinate.Vertical, startHorizontal = rock.Coordinate.Horizontal;
@@ -49,11 +59,11 @@ namespace Chess
             }
             return moves;
         }
-        public static DynamicArray<Coordinate> Path(ChessPiece rock, Coordinate endCoordinate)
+        public override DynamicArray<Coordinate> Path(ChessPiece rock, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int vertical, horizontal;
-            if(rock.Coordinate.Vertical > endCoordinate.Vertical)
+            if (rock.Coordinate.Vertical > endCoordinate.Vertical)
             {
                 vertical = rock.Coordinate.Vertical;
                 while (vertical > endCoordinate.Vertical)

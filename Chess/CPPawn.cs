@@ -5,9 +5,20 @@ using MyLibrary;
 
 namespace Chess
 {
-    abstract class CheckPawnMoves 
+    public class Pawn : ChessPiece
     {
-        public static bool CheckMove(ChessPiece pawn, Coordinate endCoordinate)
+        public override char Type { get; } = 'P';
+        public Pawn(string coordinate, bool color) : base(coordinate, color)
+        {
+
+        }
+        public Pawn(Coordinate coordinate, string color) : base(coordinate, color)
+        {
+
+        }
+        public Pawn() { }
+
+        public override bool CheckMove(ChessPiece pawn, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> Coordinates = Moves(pawn);
             for (int i = 0; i < Coordinates.Count(); i++)
@@ -19,10 +30,11 @@ namespace Chess
             }
             return false;
         }
-        public static DynamicArray<Coordinate> Moves(ChessPiece pawn)
+        public override DynamicArray<Coordinate> Moves(ChessPiece pawn)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
-            if (pawn.Color == "White" ){
+            if (pawn.Color == "White")
+            {
                 if (pawn.Coordinate.Horizontal == 2) // start horizontal for white
                 {
                     if (pawn.Coordinate.Vertical == 1)// side vertical check
@@ -53,7 +65,7 @@ namespace Chess
                 }
                 else
                 {
-                    if(pawn.Coordinate.Horizontal + 1 < 9)
+                    if (pawn.Coordinate.Horizontal + 1 < 9)
                     {
                         if (pawn.Coordinate.Vertical == 1)// side vertical check
                         {
@@ -84,7 +96,7 @@ namespace Chess
             {
                 if (pawn.Coordinate.Horizontal == 7) // start horizontal for black
                 {
-                    if(pawn.Coordinate.Vertical == 1)// side vertical check
+                    if (pawn.Coordinate.Vertical == 1)// side vertical check
                     {
                         for (int i = 0; i < 3 / 2; i++)
                         {
@@ -141,12 +153,12 @@ namespace Chess
             }
             return moves;
         }
-        public static DynamicArray<Coordinate> Path(ChessPiece pawn, Coordinate endCoordinate)
+        public override DynamicArray<Coordinate> Path(ChessPiece pawn, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             if (CheckMove(pawn, endCoordinate))
             {
-                if(pawn.Color == "White")
+                if (pawn.Color == "White")
                 {
                     if (Math.Abs(pawn.Coordinate.Vertical - endCoordinate.Vertical) == 1)
                     {

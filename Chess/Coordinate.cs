@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Chess
 {
-    class Coordinate
+    public class Coordinate
     {
         public int Horizontal { get; private set; }
         public int Vertical { get; private set; }

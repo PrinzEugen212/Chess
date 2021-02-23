@@ -5,9 +5,20 @@ using MyLibrary;
 
 namespace Chess
 {
-    class CheckKingMoves
+    public class King : ChessPiece
     {
-        public static bool CheckMove(ChessPiece king, Coordinate endCoordinate)
+        public override char Type { get; } = 'K';
+        public King(string coordinate, bool color) : base(coordinate, color)
+        {
+
+        }
+        public King(Coordinate coordinate, string color) : base(coordinate, color)
+        {
+
+        }
+        public King() { }
+
+        public override bool CheckMove(ChessPiece king, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> Coordinates = Moves(king);
             for (int i = 0; i < Coordinates.Count(); i++)
@@ -19,7 +30,7 @@ namespace Chess
             }
             return false;
         }
-        public static DynamicArray<Coordinate> Moves(ChessPiece king)
+        public override DynamicArray<Coordinate> Moves(ChessPiece king)
         {
             DynamicArray<Coordinate> kingMoves = new DynamicArray<Coordinate>();
             int vertical = king.Coordinate.Vertical, horizontal = king.Coordinate.Horizontal;
@@ -41,7 +52,7 @@ namespace Chess
                 kingMoves.Add(new Coordinate(vertical + 1, horizontal + 1));
             return kingMoves;
         }
-        public static DynamicArray<Coordinate> Path(ChessPiece king, Coordinate endCoordinate)
+        public override DynamicArray<Coordinate> Path(ChessPiece king, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             if (CheckMove(king, endCoordinate))

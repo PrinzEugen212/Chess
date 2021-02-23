@@ -5,9 +5,23 @@ using MyLibrary;
 
 namespace Chess
 {
-    class CheckBishopMoves
+
+    public class CPBishop : ChessPiece
     {
-        public static bool CheckMove(ChessPiece bishop, Coordinate endCoordinate)
+        public override char Type {get;} = 'B';
+        public CPBishop(string coordinate, bool color) : base(coordinate, color)
+        {
+
+        }
+
+        public CPBishop(Coordinate coordinate, string color) : base(coordinate, color)
+        {
+
+        }
+        public CPBishop() { }
+
+
+        public override bool CheckMove(ChessPiece bishop, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> Coordinates = Moves(bishop);
 
@@ -20,14 +34,15 @@ namespace Chess
             }
             return false;
         }
-        public static DynamicArray<Coordinate> Moves(ChessPiece bishop)
+
+        public override DynamicArray<Coordinate> Moves(ChessPiece bishop)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int startVertical = bishop.Coordinate.Vertical, startHorizontal = bishop.Coordinate.Horizontal;
             int vertical = startVertical, horizontal = startHorizontal;
             while (vertical < 8 && horizontal < 8)
             {
-                vertical++;horizontal++;
+                vertical++; horizontal++;
                 moves.Add(new Coordinate(vertical, horizontal));
             }
             vertical = startVertical; horizontal = startHorizontal;
@@ -50,7 +65,8 @@ namespace Chess
             }
             return moves;
         }
-        public static DynamicArray<Coordinate> Path(ChessPiece bishop, Coordinate endCoordinate)
+
+        public override DynamicArray<Coordinate> Path(ChessPiece bishop, Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int vertical = bishop.Coordinate.Vertical, horizontal = bishop.Coordinate.Horizontal;
