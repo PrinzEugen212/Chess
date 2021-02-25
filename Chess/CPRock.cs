@@ -17,9 +17,9 @@ namespace Chess
 
         }
         public Rock() { }
-        public override bool CheckMove(ChessPiece rock, Coordinate endCoordinate)
+        public override bool CheckMove(Coordinate endCoordinate)
         {
-            DynamicArray<Coordinate> Coordinates = Moves(rock);
+            DynamicArray<Coordinate> Coordinates = Moves();
 
             for (int i = 0; i < Coordinates.Count(); i++)
             {
@@ -30,8 +30,9 @@ namespace Chess
             }
             return false;
         }
-        public override DynamicArray<Coordinate> Moves(ChessPiece rock)
+        public override DynamicArray<Coordinate> Moves()
         {
+            Rock rock = this;
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int startVertical = rock.Coordinate.Vertical, startHorizontal = rock.Coordinate.Horizontal;
             int vertical = startVertical, horizontal = startHorizontal;
@@ -59,8 +60,9 @@ namespace Chess
             }
             return moves;
         }
-        public override DynamicArray<Coordinate> Path(ChessPiece rock, Coordinate endCoordinate)
+        public override DynamicArray<Coordinate> Path(Coordinate endCoordinate)
         {
+            Rock rock = this;
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int vertical, horizontal;
             if (rock.Coordinate.Vertical > endCoordinate.Vertical)

@@ -18,9 +18,9 @@ namespace Chess
         }
         public Queen() { }
 
-        public override bool CheckMove(ChessPiece queen, Coordinate endCoordinate)
+        public override bool CheckMove(Coordinate endCoordinate)
         {
-            DynamicArray<Coordinate> Coordinates = Moves(queen);
+            DynamicArray<Coordinate> Coordinates = Moves();
             for (int i = 0; i < Coordinates.Count(); i++)
             {
                 if (Coordinates[i].ToString() == endCoordinate.ToString())
@@ -30,10 +30,11 @@ namespace Chess
             }
             return false;
         }
-        public override DynamicArray<Coordinate> Moves(ChessPiece queen)
+        public override DynamicArray<Coordinate> Moves()
         {
-            CPBishop bishop = new CPBishop(queen.Coordinate, queen.Color); Rock rock = new Rock(queen.Coordinate, queen.Color);
-            DynamicArray<Coordinate> Bishop = bishop.Moves(queen), Rock = rock.Moves(queen);
+            Queen queen = this;
+            Bishop bishop = new Bishop(queen.Coordinate, queen.Color); Rock rock = new Rock(queen.Coordinate, queen.Color);
+            DynamicArray<Coordinate> Bishop = bishop.Moves(), Rock = rock.Moves();
             DynamicArray<Coordinate> queenMoves = new DynamicArray<Coordinate>(); // rock always have maximum 14 moves, they do not depend on the piece color
             for (int i = 0; i < Bishop.Count(); i++)
             {
@@ -45,19 +46,20 @@ namespace Chess
             }
             return queenMoves;
         }
-        public override DynamicArray<Coordinate> Path(ChessPiece queen, Coordinate endCoordinate)
+        public override DynamicArray<Coordinate> Path(Coordinate endCoordinate)
         {
+            Queen queen = this;
             DynamicArray<Coordinate> queenPath;
             
             if (Math.Abs(queen.Coordinate.Vertical - endCoordinate.Vertical) == 1 && Math.Abs(queen.Coordinate.Horizontal - endCoordinate.Horizontal) == 1)
             {
-                CPBishop bishop = new CPBishop(queen.Coordinate, queen.Color);
-                queenPath = bishop.Path(queen, endCoordinate);
+                Bishop bishop = new Bishop(queen.Coordinate, queen.Color);
+                queenPath = bishop.Path(endCoordinate);
             }
             else
             {
                 Rock rock = new Rock(queen.Coordinate, queen.Color);
-                queenPath = rock.Path(queen, endCoordinate);
+                queenPath = rock.Path(endCoordinate);
             }
             return queenPath;
         }

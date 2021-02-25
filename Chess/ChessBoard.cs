@@ -97,9 +97,9 @@ namespace Chess
                     EndIndex = i;
                 }
             }
-            if (Position[StartIndex].ContentPiece.CheckMove(Position[StartIndex].ContentPiece, endCoordinate))
+            if (Position[StartIndex].ContentPiece.CheckMove(endCoordinate))
             {
-                figurePath = Position[StartIndex].ContentPiece.Path(Position[StartIndex].ContentPiece, endCoordinate);
+                figurePath = Position[StartIndex].ContentPiece.Path(endCoordinate);
                 for (int i = 0; i < figurePath.Count(); i++)
                 {
                     cell = FindCell(figurePath[i]);

@@ -46,9 +46,9 @@ namespace Chess
         {
             Coordinate = new Coordinate(coordinate);
         }
-        public abstract bool CheckMove(ChessPiece chessPiece, Coordinate coordinate);
-        public abstract DynamicArray<Coordinate> Path(ChessPiece figure, Coordinate coordinate);
+        public abstract bool CheckMove(Coordinate coordinate);
+        public abstract DynamicArray<Coordinate> Path(Coordinate coordinate);
 
-        public abstract DynamicArray<Coordinate> Moves(ChessPiece chessPiece);
+        public abstract DynamicArray<Coordinate> Moves();
     }
 }

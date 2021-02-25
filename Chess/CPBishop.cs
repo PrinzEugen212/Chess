@@ -6,24 +6,24 @@ using MyLibrary;
 namespace Chess
 {
 
-    public class CPBishop : ChessPiece
+    public class Bishop : ChessPiece
     {
         public override char Type {get;} = 'B';
-        public CPBishop(string coordinate, bool color) : base(coordinate, color)
+        public Bishop(string coordinate, bool color) : base(coordinate, color)
         {
 
         }
 
-        public CPBishop(Coordinate coordinate, string color) : base(coordinate, color)
+        public Bishop(Coordinate coordinate, string color) : base(coordinate, color)
         {
 
         }
-        public CPBishop() { }
+        public Bishop() { }
 
 
-        public override bool CheckMove(ChessPiece bishop, Coordinate endCoordinate)
+        public override bool CheckMove( Coordinate endCoordinate)
         {
-            DynamicArray<Coordinate> Coordinates = Moves(bishop);
+            DynamicArray<Coordinate> Coordinates = Moves();
 
             for (int i = 0; i < Coordinates.Count(); i++)
             {
@@ -35,8 +35,9 @@ namespace Chess
             return false;
         }
 
-        public override DynamicArray<Coordinate> Moves(ChessPiece bishop)
+        public override DynamicArray<Coordinate> Moves()
         {
+            Bishop bishop = this;
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int startVertical = bishop.Coordinate.Vertical, startHorizontal = bishop.Coordinate.Horizontal;
             int vertical = startVertical, horizontal = startHorizontal;
@@ -66,8 +67,9 @@ namespace Chess
             return moves;
         }
 
-        public override DynamicArray<Coordinate> Path(ChessPiece bishop, Coordinate endCoordinate)
+        public override DynamicArray<Coordinate> Path(Coordinate endCoordinate)
         {
+            Bishop bishop = this;
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int vertical = bishop.Coordinate.Vertical, horizontal = bishop.Coordinate.Horizontal;
             int endVertical = endCoordinate.Vertical, endHorizontal = endCoordinate.Horizontal;

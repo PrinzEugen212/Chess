@@ -18,9 +18,9 @@ namespace Chess
         }
         public King() { }
 
-        public override bool CheckMove(ChessPiece king, Coordinate endCoordinate)
+        public override bool CheckMove( Coordinate endCoordinate)
         {
-            DynamicArray<Coordinate> Coordinates = Moves(king);
+            DynamicArray<Coordinate> Coordinates = Moves();
             for (int i = 0; i < Coordinates.Count(); i++)
             {
                 if (Coordinates[i].ToString() == endCoordinate.ToString())
@@ -30,8 +30,9 @@ namespace Chess
             }
             return false;
         }
-        public override DynamicArray<Coordinate> Moves(ChessPiece king)
+        public override DynamicArray<Coordinate> Moves()
         {
+            King king = this;
             DynamicArray<Coordinate> kingMoves = new DynamicArray<Coordinate>();
             int vertical = king.Coordinate.Vertical, horizontal = king.Coordinate.Horizontal;
             if (vertical + 1 < 9)
@@ -52,10 +53,10 @@ namespace Chess
                 kingMoves.Add(new Coordinate(vertical + 1, horizontal + 1));
             return kingMoves;
         }
-        public override DynamicArray<Coordinate> Path(ChessPiece king, Coordinate endCoordinate)
+        public override DynamicArray<Coordinate> Path(Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
-            if (CheckMove(king, endCoordinate))
+            if (CheckMove(endCoordinate))
             {
                 moves.Add(endCoordinate);
                 return moves;
