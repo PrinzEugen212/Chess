@@ -11,7 +11,7 @@ namespace Chess
             switch (type)
             {
                 case 'P': return new Pawn(coordinate, color);
-                case 'B': return new CPBishop(coordinate, color);
+                case 'B': return new Bishop(coordinate, color);
                 case 'N': return new Knight(coordinate, color);
                 case 'R': return new Rock(coordinate, color);
                 case 'Q': return new Queen(coordinate, color);
