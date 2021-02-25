@@ -64,9 +64,4 @@ namespace Chess
             return queenPath;
         }
     }
-
-    public class CPQueen
-    {
-        
-    }
 }
