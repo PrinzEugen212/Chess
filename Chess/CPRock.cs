@@ -53,6 +53,7 @@ namespace Chess
                 horizontal++;
                 moves.Add(new Coordinate(vertical, horizontal));
             }
+            horizontal = startHorizontal;
             while (vertical > 1)
             {
                 vertical--;

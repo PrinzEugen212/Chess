@@ -99,7 +99,7 @@ namespace Chess
                 {
                     if (pawn.Coordinate.Vertical == 1)// side vertical check
                     {
-                        for (int i = 0; i < 3 / 2; i++)
+                        for (int i = 0; i < 4 / 2; i++)
                         {
                             moves.Add(new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - i - 1));
                         }
@@ -107,7 +107,7 @@ namespace Chess
                     }
                     else if (pawn.Coordinate.Vertical == 8)// side vertical check
                     {
-                        for (int i = 0; i < 3 / 2; i++)
+                        for (int i = 0; i < 4 / 2; i++)
                         {
                             moves.Add(new Coordinate(pawn.Coordinate.Vertical, pawn.Coordinate.Horizontal - i - 1));
                         }
