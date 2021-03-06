@@ -11,6 +11,7 @@ namespace Chess
     {
         Cell[] Position = new Cell[64];
         string[] Verticals = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
+        int turnCount = 1;
 
         /// <summary>
         /// Создаётся новый экземпляр доски с установленной стандартной начальной позицией
@@ -69,12 +70,14 @@ namespace Chess
         /// <param name="endCoordinate"></param>
         public void Move(Coordinate startCoordinate, Coordinate endCoordinate)
         {
+            
 
             string[] Parameters = new string[2];
             Parameters[0] = startCoordinate.ToString();
             Parameters[1] = endCoordinate.ToString();
             DynamicArray<Coordinate> figurePath;
             Cell cell;
+            ChessPiece movingPiece = null;
             for (int i = 0; i < Position.Length; i++)
             {
                 if (Position[i].Coordinate.ToString() == Parameters[0])
@@ -91,22 +94,41 @@ namespace Chess
                 if(Position[i].Coordinate.ToString() == Parameters[0])
                 {
                     StartIndex = i;
+                    if (turnCount % 2 == 1)
+                    {
+                        if (Position[StartIndex].ContentPiece.Color == "Black")
+                        {
+                            throw new Exception("Сейчас ход белых");
+                        }
+                    }
+                    else
+                    {
+                        if (Position[StartIndex].ContentPiece.Color == "White")
+                        {
+                            throw new Exception("Сейчас ход чёрных");
+                        }
+                    }
+                    movingPiece = Position[StartIndex].ContentPiece;
                 }
                 if (Position[i].Coordinate.ToString() == Parameters[1])
                 {
                     EndIndex = i;
                 }
             }
-            if (Position[StartIndex].ContentPiece.CheckMove(endCoordinate))
+
+            if (movingPiece == null)
+                throw new Exception("Введена неверная координата");
+
+            if (movingPiece.CheckMove(endCoordinate))
             {
-                figurePath = Position[StartIndex].ContentPiece.Path(endCoordinate);
+                figurePath = movingPiece.Path(endCoordinate);
                 for (int i = 0; i < figurePath.Count(); i++)
                 {
                     cell = FindCell(figurePath[i]);
 
                     if (i == figurePath.Count() - 1)
                     {
-                        if (cell.ContentPiece != null && cell.ContentPiece.Color == Position[StartIndex].ContentPiece.Color)
+                        if (cell.ContentPiece != null && cell.ContentPiece.Color == movingPiece.Color)
                         {
                             throw new Exception("Невозможный ход");
                         }
@@ -117,10 +139,11 @@ namespace Chess
                         throw new Exception("Невозможный ход");
                     }
                 }
-                Position[StartIndex].ContentPiece.SetCoordinate(endCoordinate.ToString());
+                movingPiece.SetCoordinate(endCoordinate.ToString());
                 Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
                 Position[StartIndex].ChangeContent(" ");
                 Log.Add(endCoordinate.ToString(), Position[EndIndex].ContentPiece.Color, Position[EndIndex].ContentPiece.Type);
+                turnCount++;
                 Render.ShowBoard(this);
             }
             else
