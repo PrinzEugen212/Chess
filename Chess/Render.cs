@@ -25,14 +25,21 @@ namespace Chess
                     if ((i + j) % 2 == 0)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        
                     }
                     else
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGray;
-                        Console.ForegroundColor = ConsoleColor.Black;
                     }
                     Console.Write(" ");
+                    if (position[c2].ContentPiece != null && position[c2].ContentPiece.Color == "White")
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    }
+                    if (position[c2].ContentPiece != null && position[c2].ContentPiece.Color == "Black")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
                     ShowCell(position[c2]);
                     //position[c2].Write();
                     c2++;
