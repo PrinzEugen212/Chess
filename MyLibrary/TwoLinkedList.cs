@@ -14,10 +14,9 @@ namespace MyLibrary
         public T Data { get; set; }
         public Node<T> Next { get; set; }
         public Node<T> Previous { get; set; }
-
     }
 
-    class TwoLinkedList<T>
+    public class TwoLinkedList<T>
     {
         Node<T> first;
         Node<T> last;
