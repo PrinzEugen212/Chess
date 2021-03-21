@@ -51,7 +51,7 @@ namespace Chess
             Queen queen = this;
             DynamicArray<Coordinate> queenPath;
             
-            if (Math.Abs(queen.Coordinate.Vertical - endCoordinate.Vertical) == 1 && Math.Abs(queen.Coordinate.Horizontal - endCoordinate.Horizontal) == 1)
+            if (Math.Abs(queen.Coordinate.Vertical - endCoordinate.Vertical) != 0 && Math.Abs(queen.Coordinate.Horizontal - endCoordinate.Horizontal) != 0)
             {
                 Bishop bishop = new Bishop(queen.Coordinate, queen.Color);
                 queenPath = bishop.Path(endCoordinate);
