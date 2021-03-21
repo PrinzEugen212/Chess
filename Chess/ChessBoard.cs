@@ -12,7 +12,6 @@ namespace Chess
         Cell[] Position = new Cell[64];
         string[] Verticals = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
         int turnCount = 1;
-
         /// <summary>
         /// Создаётся новый экземпляр доски с установленной стандартной начальной позицией
         /// </summary>
@@ -21,6 +20,70 @@ namespace Chess
             SetStandartPosition();
         }
 
+        public string CheckTurn(ChessPiece chessPiece)
+        {
+            if (chessPiece == null)
+            {
+                if (turnCount % 2 == 1)
+                {
+                    return "White";
+                }
+                else
+                {
+                    return "Black";
+                }
+            }
+            if (turnCount % 2 == 1)
+            {
+                if (chessPiece.Color == "Black")
+                {
+                    throw new Exception("Сейчас ход белых");
+                }
+            }
+            else
+            {
+                if (chessPiece.Color == "White")
+                {
+                    throw new Exception("Сейчас ход чёрных");
+                }
+            }
+            return " ";
+        }
+        private bool CheckCheck()
+        {
+            ChessPiece WhiteKing = null, BlackKing = null;
+            string movingSide = CheckTurn(null);
+            for (int i = 0; i < Position.Length; i++)
+            {
+                if (Position[i].ContentPiece != null && Position[i].ContentPiece.Type == 'K')
+                {
+                    if (Position[i].ContentPiece.Color == "Black")
+                    {
+                        BlackKing = Position[i].ContentPiece;
+                    }
+                    if (Position[i].ContentPiece.Color == "White")
+                    {
+                        WhiteKing = Position[i].ContentPiece;
+                    }
+                }
+            }
+
+            if (WhiteKing == null || BlackKing == null)
+                throw new Exception("На доске нет короля");
+
+
+            for (int i = 0; i < Position.Length; i++)
+            {
+                if (Position[i].ContentPiece != null && Position[i].ContentPiece.Color != movingSide)
+                {
+                    if (Position[i].ContentPiece.CheckMove((movingSide == "White")? WhiteKing.Coordinate : BlackKing.Coordinate))
+                    {
+                        throw new Exception("Шах");
+                    }
+                }
+            }
+            return false;
+        }
         /// <summary>
         /// Устанавливает начальную позицию фигур на доске
         /// </summary>
@@ -38,7 +101,6 @@ namespace Chess
                 if (HNum == 1 || HNum == 2) // 1 & 2 horizontals - white
                 {
                     Position[i].ChangeContent(ChessFactory.Create(Coordinate, Convert.ToChar(Contents[i - 32]), true));
-
                 }
                 if (HNum == 7 || HNum == 8) // 7 & 8 horizontals - black
                 {
@@ -88,26 +150,14 @@ namespace Chess
                     }
                 }
             }
+            CheckCheck();
             int StartIndex = 0, EndIndex = 0;
             for (int i = 0; i < Position.Length; i++)
             {
                 if(Position[i].Coordinate.ToString() == Parameters[0])
                 {
                     StartIndex = i;
-                    if (turnCount % 2 == 1)
-                    {
-                        if (Position[StartIndex].ContentPiece.Color == "Black")
-                        {
-                            throw new Exception("Сейчас ход белых");
-                        }
-                    }
-                    else
-                    {
-                        if (Position[StartIndex].ContentPiece.Color == "White")
-                        {
-                            throw new Exception("Сейчас ход чёрных");
-                        }
-                    }
+                    CheckTurn(Position[StartIndex].ContentPiece);
                     movingPiece = Position[StartIndex].ContentPiece;
                 }
                 if (Position[i].Coordinate.ToString() == Parameters[1])
@@ -130,18 +180,21 @@ namespace Chess
                     {
                         if (cell.ContentPiece != null && cell.ContentPiece.Color == movingPiece.Color)
                         {
-                            throw new Exception("Невозможный ход");
+                            throw new Exception("Фигуры одного и того же цвета");
                         }
                     }
-
-                    if (cell.Contains())
+                    if (i < figurePath.Count() - 1)
                     {
-                        throw new Exception("Невозможный ход");
+                        if (cell.Contains())
+                        {
+                            throw new Exception("На пути фигуры находится другая фигура");
+                        }
                     }
                 }
                 movingPiece.SetCoordinate(endCoordinate.ToString());
                 Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
                 Position[StartIndex].ChangeContent(" ");
+                CheckCheck();
                 Log.Add(endCoordinate.ToString(), Position[EndIndex].ContentPiece.Color, Position[EndIndex].ContentPiece.Type);
                 turnCount++;
                 Render.ShowBoard(this);
