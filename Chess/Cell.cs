@@ -39,6 +39,12 @@ namespace Chess
         /// <param name="ChessPiece">Фигура, которую нужно записать в данную ячейку</param>
         public void ChangeContent(ChessPiece ChessPiece)
         {
+            if (ChessPiece == null)
+            {
+                Content = " ";
+                ContentPiece = null;
+                return;
+            }
             ContentPiece = ChessPiece;
             Content = "";
         }
