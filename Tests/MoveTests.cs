@@ -13,6 +13,7 @@ namespace Tests
             [TestCase("C4", "F1", true)]
             [TestCase("C1", "G5", true)]
             [TestCase("B2", "C1", true)]
+            [TestCase("H4", "E1", true)]
             [TestCase("F1", "A4", false)]
             [TestCase("C4", "G5", false)]
             [TestCase("G3", "E2", false)]
@@ -34,6 +35,7 @@ namespace Tests
             [TestCase("G1", "A7", true)]
             [TestCase("G3", "E2", false)]
             [TestCase("E7", "B3", false)]
+            [TestCase("H4", "E1", true)]
             public void TestQueen(string coordinate, string endCoordinate, bool result)
             {
                 // moves don't depend to color so it doesn't matter
