@@ -101,9 +101,7 @@ namespace Chess
                 }
             }
         }
-        /// <summary>
-        /// Устанавливает начальную позицию фигур на доске
-        /// </summary>
+        
 
         private void CheckWithOtherPieces(DynamicArray<Coordinate> figurePath, ChessPiece movingPiece)
         {
@@ -127,6 +125,9 @@ namespace Chess
                 }
             }
         }
+        /// <summary>
+        /// Устанавливает начальную позицию фигур на доске
+        /// </summary>
         private void SetStandartPosition()
         {
             string P = "R N B Q K B N R " + "P P P P P P P P " + "P P P P P P P P " + "R N B Q K B N R ";
@@ -155,14 +156,8 @@ namespace Chess
 
         private Cell FindCell(Coordinate coordinate)
         {
-            foreach (var cell in Position)
-            {
-                if (cell.Coordinate.Vertical == coordinate.Vertical && cell.Coordinate.Horizontal == coordinate.Horizontal)
-                {
-                    return cell;
-                }
-            }
-            return Position[0];
+            int index = Math.Abs(coordinate.Horizontal - 8) * 8 + coordinate.Vertical - 1; // it's just works
+            return Position[index];
         }
 
         /// <summary>
