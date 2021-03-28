@@ -9,6 +9,28 @@ namespace Chess
         public int Horizontal { get; private set; }
         public int Vertical { get; private set; }
         private string StringCoordinate;
+        private readonly Dictionary<int, string> fromInt = new Dictionary<int, string>
+        {
+            [1] = "A",
+            [2] = "B",
+            [3] = "C",
+            [4] = "D",
+            [5] = "E",
+            [6] = "F",
+            [7] = "G",
+            [8] = "H"
+        };
+        public readonly Dictionary<string, int> fromChar = new Dictionary<string, int>
+        {
+            ["A"] = 1,
+            ["B"] = 2,
+            ["C"] = 3,
+            ["D"] = 4,
+            ["E"] = 5,
+            ["F"] = 6,
+            ["G"] = 7,
+            ["H"] = 8
+        };
         /// <summary>
         /// Создаёт экземпляр класса с переданной координатой
         /// </summary>
@@ -16,8 +38,8 @@ namespace Chess
         public Coordinate(string Coordinate)
         {
             StringCoordinate = Coordinate;
-            Horizontal = HorizontalFactory(Coordinate[1]);
-            Vertical = VerticalFactory(Coordinate[0]);
+            Horizontal = (int)Char.GetNumericValue(Coordinate[1]);
+            Vertical = fromChar[Coordinate[0].ToString()];
         }
 
         /// <summary>
@@ -29,55 +51,7 @@ namespace Chess
         {
             Horizontal = horizontal;
             Vertical = vertical;
-            StringCoordinate = VerticalFactory(vertical).ToString() + horizontal.ToString();
-        }
-        private int VerticalFactory(char vertical) // from char to int
-        {
-            switch (vertical)
-            {
-                case 'A': return 1;
-                case 'B': return 2;
-                case 'C': return 3;
-                case 'D': return 4;
-                case 'E': return 5;
-                case 'F': return 6;
-                case 'G': return 7;
-                case 'H': return 8;
-                default:
-                    return 0;
-            }
-        }
-        private char VerticalFactory(int vertical) // from int to cahr
-        {
-            switch (vertical)
-            {
-                case 1: return 'A';
-                case 2: return 'B';
-                case 3: return 'C';
-                case 4: return 'D';
-                case 5: return 'E';
-                case 6: return 'F';
-                case 7: return 'G';
-                case 8: return 'H';
-                default:
-                    return 'U';
-            }
-        }
-        private int HorizontalFactory(char horizontal) // from char to int
-        {
-            switch (horizontal)
-            {
-                case '1': return 1;
-                case '2': return 2;
-                case '3': return 3;
-                case '4': return 4;
-                case '5': return 5;
-                case '6': return 6;
-                case '7': return 7;
-                case '8': return 8;
-                default:
-                    return 0;
-            }
+            StringCoordinate = fromInt[vertical].ToString() + horizontal.ToString();
         }
         /// <summary>
         /// Возвращает координату в виде строки, например E4
