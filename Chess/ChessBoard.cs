@@ -200,6 +200,7 @@ namespace Chess
                 {
                     Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
                     Position[StartIndex].ChangeContent(" ");
+                    movingPiece.SetCoordinate(endCoordinate.ToString());
                     CheckCheck();
                 }
                 catch(Exception)
@@ -207,6 +208,7 @@ namespace Chess
                     
                     Position[EndIndex].ChangeContent(temp2);
                     Position[StartIndex].ChangeContent(temp1);
+                    movingPiece.SetCoordinate(Position[StartIndex].Coordinate.ToString());
                     throw new Exception("Шах");
                 }
                 movingPiece.SetCoordinate(endCoordinate.ToString());
