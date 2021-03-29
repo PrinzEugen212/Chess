@@ -18,7 +18,6 @@ namespace Chess
         {
 
         }
-        public Bishop() { }
 
 
         public override bool CheckMove( Coordinate endCoordinate)
@@ -37,6 +36,7 @@ namespace Chess
 
         public override DynamicArray<Coordinate> Moves()
         {
+            
             Bishop bishop = this;
             DynamicArray<Coordinate> moves = new DynamicArray<Coordinate>();
             int startVertical = bishop.Coordinate.Vertical, startHorizontal = bishop.Coordinate.Horizontal;
@@ -93,6 +93,7 @@ namespace Chess
             {
                 while (vertical > endVertical && horizontal < endHorizontal)
                 {
+                    vertical--; horizontal++;
                     moves.Add(new Coordinate(vertical, horizontal));
                 }
             }

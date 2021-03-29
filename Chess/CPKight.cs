@@ -16,7 +16,6 @@ namespace Chess
         {
 
         }
-        public Knight() { }
 
         public override bool CheckMove(Coordinate endCoordinate)
         {

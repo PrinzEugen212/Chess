@@ -16,7 +16,6 @@ namespace Chess
         {
 
         }
-        public Rock() { }
         public override bool CheckMove(Coordinate endCoordinate)
         {
             DynamicArray<Coordinate> Coordinates = Moves();

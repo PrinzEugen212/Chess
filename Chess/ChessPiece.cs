@@ -12,7 +12,6 @@ namespace Chess
         /// Создаёт фигуру с заданной координатой, типом и цветом
         /// </summary>
         /// <param name="coordinate">Положение фигуры на доске, формат должен быть аналогичен E4</param>
-        /// <param name="type">Тип фигуры, P - пешка, N - конь, B - слон, R - ладья, Q - ферзь, K - король</param>
         /// <param name="color">Цвет фигуры. true - белый, false - чёрный</param>
         public ChessPiece(string coordinate, bool color)
         {
@@ -33,10 +32,6 @@ namespace Chess
             Color = color;
         }
 
-        /// <summary>
-        /// Создаёт фигуру со значениями по умолчанию
-        /// </summary>
-        public ChessPiece() { }
 
         /// <summary>
         /// Устанавливает фигуре переданную координату

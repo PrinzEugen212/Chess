@@ -24,12 +24,12 @@ namespace Chess
         //}
 
         /// <summary>
-        /// Изменяет значение ячейки на ""
+        /// Устанавливает пустое содержимое для ячейки
         /// </summary>
         /// <param name="content">Строка, должна состоять только из пробела</param>
-        public void ChangeContent(string content)
+        public void VoidContent()
         {
-            Content = content;
+            Content = " ";
             ContentPiece = null;
         }
 

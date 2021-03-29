@@ -16,7 +16,6 @@ namespace Chess
         {
 
         }
-        public Pawn() { }
 
         public override bool CheckMove(Coordinate endCoordinate)
         {

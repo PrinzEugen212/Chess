@@ -6,7 +6,7 @@ namespace Chess
 {
     static class Log
     {
-        static private StringBuilder GameLog = new StringBuilder();
+        private static readonly StringBuilder GameLog = new StringBuilder();
         static public int Turn { get; private set; }
         /// <summary>
         /// Добавляет в лог партии запись сделанного хода

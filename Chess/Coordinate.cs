@@ -8,7 +8,7 @@ namespace Chess
     {
         public int Horizontal { get; private set; }
         public int Vertical { get; private set; }
-        private string StringCoordinate;
+        private string StringCoordinate { get; set; }
         private readonly Dictionary<int, string> fromInt = new Dictionary<int, string>
         {
             [1] = "A",
@@ -61,21 +61,5 @@ namespace Chess
         {
             return StringCoordinate;
         }
-        //public void SetCoordinate(int vertical, int horizontal)
-        //{
-        //    Vertical = vertical;
-        //    Horizontal = horizontal;
-        //}
-        //public void SetCoordinate(int number, bool verticalOrNot)
-        //{
-        //    if (verticalOrNot)
-        //    {
-        //        Vertical = number;
-        //    }
-        //    else
-        //    {
-        //        Horizontal = number;
-        //    }
-        //}
     }
 }

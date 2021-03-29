@@ -16,7 +16,6 @@ namespace Chess
         {
 
         }
-        public Queen() { }
 
         public override bool CheckMove(Coordinate endCoordinate)
         {

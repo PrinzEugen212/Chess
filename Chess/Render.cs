@@ -14,12 +14,12 @@ namespace Chess
         {
             Cell[] position = chessBoard.GetPosition();
             Console.Clear();
-            int c1 = 8;
-            int c2 = 0;
+            int vNum = 8; // номер вертикали, отображается "сверху вниз", поэтому декремент
+            int index = 0; // счётчик для пробега по позиции
             for (int i = 0; i < 8; i++)
             {
-                Console.Write(c1 + " ");
-                c1--;
+                Console.Write(vNum + " ");
+                vNum--;
                 for (int j = 0; j < 8; j++)
                 {
                     if ((i + j) % 2 == 0)
@@ -32,17 +32,16 @@ namespace Chess
                         Console.BackgroundColor = ConsoleColor.DarkGray;
                     }
                     Console.Write(" ");
-                    if (position[c2].ContentPiece != null && position[c2].ContentPiece.Color == "White")
+                    if (position[index].ContentPiece != null && position[index].ContentPiece.Color == "White")
                     {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                     }
-                    if (position[c2].ContentPiece != null && position[c2].ContentPiece.Color == "Black")
+                    if (position[index].ContentPiece != null && position[index].ContentPiece.Color == "Black")
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
                     }
-                    ShowCell(position[c2]);
-                    //position[c2].Write();
-                    c2++;
+                    ShowCell(position[index]);
+                    index++;
                     Console.Write(" ");
                     if (j == 7)
                     {

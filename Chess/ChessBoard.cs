@@ -10,7 +10,7 @@ namespace Chess
     class ChessBoard
     {
         Cell[] Position = new Cell[64];
-        string[] Verticals = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
+
         int turnCount = 1;
         /// <summary>
         /// Создаётся новый экземпляр доски с установленной стандартной начальной позицией
@@ -63,7 +63,7 @@ namespace Chess
         {
             ChessPiece WhiteKing = null, BlackKing = null;
             string movingSide = CheckTurn();
-            for (int i = 0; i < Position.Length; i++)
+            for (int i = 0; i < Position.Length; i++) // поиск королей по доске
             {
                 if (Position[i].ContentPiece != null && Position[i].ContentPiece.Type == 'K')
                 {
@@ -101,8 +101,12 @@ namespace Chess
                 }
             }
         }
-        
 
+        /// <summary>
+        /// Проверка пути переданной фигуры на "пригодность" к передвижению 
+        /// </summary>
+        /// <param name="figurePath">Путь фигуры, который нужно проверить</param>
+        /// <param name="movingPiece">Передвигаемая фигура</param>
         private void CheckWithOtherPieces(DynamicArray<Coordinate> figurePath, ChessPiece movingPiece)
         {
             for (int i = 0; i < figurePath.Count(); i++)
@@ -130,33 +134,51 @@ namespace Chess
         /// </summary>
         private void SetStandartPosition()
         {
+            string[] Verticals = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
             string P = "R N B Q K B N R " + "P P P P P P P P " + "P P P P P P P P " + "R N B Q K B N R ";
             string[] Contents = P.Split(' ');
-            int VInd, HNum; // Vertical index and horizontal number, needed to calculate vertical and horizonal for cell or piece
+            int VNum, HNum; // Номера текущей горизонтали и вертикали в цикле
             for (int i = 0; i < Position.Length; i++)
             {
-                VInd = i % 8;
-                HNum = Math.Abs(i / 8 - 8);
-                string Coordinate = Verticals[VInd].ToString() + HNum.ToString();
+                VNum = i % 8;               // получение номера вертикали и горизонтали
+                HNum = Math.Abs(i / 8 - 8); // получение номера вертикали и горизонтали
+                string Coordinate = Verticals[VNum].ToString() + HNum.ToString();
                 Position[i] = new Cell(Coordinate);
-                if (HNum == 1 || HNum == 2) // 1 & 2 horizontals - white
+                if (HNum == 1 || HNum == 2) // на первой и второй горизонталях располагаются белые фигуры
                 {
-                    Position[i].ChangeContent(ChessFactory.Create(Coordinate, Convert.ToChar(Contents[i - 32]), true));
+                    Position[i].ChangeContent(ChessFactory.Create(Coordinate, Convert.ToChar(Contents[i - 32]), true)); // вычитание нужно потому что 1 и 2 горизонтали находятся в конце массива Position. 32 - размер половины массива
                 }
-                if (HNum == 7 || HNum == 8) // 7 & 8 horizontals - black
+                else if (HNum == 7 || HNum == 8) // на седьмой и восьмой горизонталях располагаются чёрные фигуры
                 {
-                    Position[i].ChangeContent(ChessFactory.Create(Coordinate, Convert.ToChar(Contents[i]), false));
+                    Position[i].ChangeContent(ChessFactory.Create(Coordinate, Convert.ToChar(Contents[i]), false)); // 7 и 8 горизонтали находятся в начале, вычитание не нужно
                 }
-                if (HNum > 2 && HNum < 7)
+                else // на всех остальных горизонталях фигур нет
                 {
-                    Position[i].ChangeContent(" ");
+                    Position[i].VoidContent();
                 }
             }
         }
 
+        /// <summary>
+        /// Возвращает ячейку по заданной координате
+        /// </summary>
+        /// <param name="coordinate">Кооордината, по которой нужно найти ячейку</param>
+        /// <returns></returns>
         private Cell FindCell(Coordinate coordinate)
         {
-            int index = Math.Abs(coordinate.Horizontal - 8) * 8 + coordinate.Vertical - 1; // it's just works
+            int index = Math.Abs(coordinate.Horizontal - 8) * 8 + coordinate.Vertical - 1; // парсинг текущего номера вертикали и горизонтали в индекс массива
+            return Position[index];
+        }
+
+        /// <summary>
+        /// Возвращает ячейку по заданной координате в виде строки
+        /// </summary>
+        /// <param name="coordinate">Координата, формат должен быть аналогичен Е4</param>
+        /// <returns></returns>
+        private Cell FindCell(string coordinate)
+        {
+            Coordinate c = new Coordinate(coordinate);
+            int index = Math.Abs(c.Horizontal - 8) * 8 + c.Vertical - 1; // парсинг текущего номера вертикали и горизонтали в индекс массива
             return Position[index];
         }
 
@@ -167,52 +189,40 @@ namespace Chess
         /// <param name="endCoordinate"></param>
         public void Move(Coordinate startCoordinate, Coordinate endCoordinate)
         {
-            string[] Parameters = new string[2];
-            Parameters[0] = startCoordinate.ToString();
-            Parameters[1] = endCoordinate.ToString();
             DynamicArray<Coordinate> figurePath;
-            ChessPiece movingPiece = null;
-            int StartIndex = 0, EndIndex = 0;
-            for (int i = 0; i < Position.Length; i++)
+            Cell startCell = FindCell(startCoordinate), endCell = FindCell(endCoordinate);
+
+            if (startCell.ContentPiece == null)
             {
-                if (Position[i].Coordinate.ToString() == Parameters[0])
-                {
-                    if (Position[i].ContentPiece == null)
-                    {
-                        throw new Exception("В ячейке с выбранной начальной координатой нет фигуры");
-                    }
-                    StartIndex = i;
-                    CheckTurn(Position[StartIndex].ContentPiece);
-                    movingPiece = Position[StartIndex].ContentPiece;
-                }
-                if (Position[i].Coordinate.ToString() == Parameters[1])
-                {
-                    EndIndex = i;
-                }
+                throw new Exception("В ячейке с выбранной начальной координатой нет фигуры");
             }
+
+            CheckTurn(startCell.ContentPiece);
+            ChessPiece movingPiece = startCell.ContentPiece;
+
 
             if (movingPiece.CheckMove(endCoordinate))
             {
                 figurePath = movingPiece.Path(endCoordinate);
                 CheckWithOtherPieces(figurePath, movingPiece);
-                ChessPiece temp1 = Position[StartIndex].ContentPiece, temp2 = Position[EndIndex].ContentPiece;
+                ChessPiece temp1 = startCell.ContentPiece, temp2 = endCell.ContentPiece;
                 try
                 {
-                    Position[EndIndex].ChangeContent(Position[StartIndex].ContentPiece);
-                    Position[StartIndex].ChangeContent(" ");
+                    endCell.ChangeContent(startCell.ContentPiece);
+                    startCell.VoidContent();
                     movingPiece.SetCoordinate(endCoordinate.ToString());
                     CheckCheck();
                 }
-                catch(Exception)
+                catch (Exception)
                 {
-                    
-                    Position[EndIndex].ChangeContent(temp2);
-                    Position[StartIndex].ChangeContent(temp1);
-                    movingPiece.SetCoordinate(Position[StartIndex].Coordinate.ToString());
+
+                    endCell.ChangeContent(temp2);
+                    startCell.ChangeContent(temp1);
+                    movingPiece.SetCoordinate(startCell.Coordinate.ToString());
                     throw new Exception("Шах");
                 }
                 movingPiece.SetCoordinate(endCoordinate.ToString());
-                Log.Add(endCoordinate.ToString(), Position[EndIndex].ContentPiece.Color, Position[EndIndex].ContentPiece.Type);
+                Log.Add(endCoordinate.ToString(), endCell.ContentPiece.Color, endCell.ContentPiece.Type);
                 turnCount++;
                 Render.ShowBoard(this);
             }
